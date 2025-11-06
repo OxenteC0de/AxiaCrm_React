@@ -5,13 +5,17 @@ import DeletarProduto from "./components/produto/deletarproduto/DeletarProduto";
 
 
 function App() {
+import Home from "./pages/home/Home";
 
+function App () {
   return (
     <>
     <BrowserRouter>
       <Routes>
         {/* Página inicial */}
         {/* <Route path="/" element={<Home />} /> */}
+         <Home />
+
 
         {/* Listagem de produtos */}
         <Route path="/produtos" element={<ListaProdutos />} />
@@ -28,6 +32,7 @@ function App() {
     </BrowserRouter>
     </>
   )
+  );
 }
 
-export default App
+export default App;
