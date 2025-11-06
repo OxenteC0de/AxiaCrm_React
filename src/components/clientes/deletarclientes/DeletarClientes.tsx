@@ -61,7 +61,7 @@ function DeletarClientes() {
       </p>
 
       <div className="border flex flex-col rounded-2xl overflow-hidden justify-between">
-        <header className="py-2 px-6 bg-indigo-600 text-white font-bold text-2xl">
+        <header className="py-2 px-6 bg-blue-500 text-white font-bold text-2xl">
           {clientes.nome}
         </header>
 

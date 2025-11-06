@@ -88,7 +88,7 @@ function FormClientes() {
             type="text"
             placeholder="Digite o nome do cliente"
             name="nome"
-            className="border-2 border-pink-700 rounded p-2"
+            className="border-2 border-blue-300 rounded p-2"
             value={clientes.nome}
             onChange={(e: ChangeEvent<HTMLInputElement>) => atualizarEstado(e)}
           />
@@ -98,7 +98,7 @@ function FormClientes() {
             type="text"
             placeholder="Digite a descrição do cliente"
             name="descricao"
-            className="border-2 border-pink-700 rounded p-2"
+            className="border-2 border-blue-300 rounded p-2"
             value={clientes.descricao}
             onChange={(e: ChangeEvent<HTMLInputElement>) => atualizarEstado(e)}
           />
