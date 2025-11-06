@@ -1,4 +1,3 @@
-<title>AxiaCRM - README</title>
 </head>
 <body>
 
