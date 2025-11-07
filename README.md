@@ -93,11 +93,11 @@ DATABASE_NAME=db_axiacrm</code></pre>
   <pre><code>
   
 # Clonar o backend
-git clone https://github.com/seu-usuario/AxiaCrm.git
+git clone [https://github.com/seu-usuario/AxiaCrm.git](https://github.com/OxenteC0de/AxiaCrm.git)
 cd axiacrm
 
 # Clonar o frontend
-git clone https://github.com/seu-usuario/AxiaCrm_React.git
+git clone [https://github.com/seu-usuario/AxiaCrm_React.git](https://github.com/OxenteC0de/AxiaCrm_React.git)
 cd axiacrm_react
 </code></pre>
 
