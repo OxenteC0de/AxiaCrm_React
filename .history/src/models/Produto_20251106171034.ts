@@ -6,7 +6,6 @@ export default interface Produto{
     titulo: string;
     descricao: string;
     data: string;
-    status: boolean;
     // cliente: Cliente | null;
   
 }

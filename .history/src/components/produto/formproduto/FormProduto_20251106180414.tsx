@@ -1,7 +1,7 @@
 import {  useEffect, useState, type ChangeEvent, type FormEvent } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { atualizar, buscar, cadastrar} from "../../../services/Service";
-import { ClipLoader } from "react-spinners";
+import { <ClipLoader></ClipLoader>
 import type Produto from "../../../models/Produto";
 
 function FormProduto(){
@@ -32,12 +32,6 @@ function FormProduto(){
            [e.target.name]: e.target.value 
         })
     }
-    function atualizarStatus(e: ChangeEvent<HTMLInputElement>) {
-    setProduto({
-      ...produto,
-      status: e.target.checked, // Ativa/desativa a oportunidade baseado no checkbox
-    });
-  }
 
     function retornar(){
         navigate("/produtos")
@@ -99,21 +93,6 @@ function FormProduto(){
                         onChange={(e: ChangeEvent<HTMLInputElement>) => atualizarEstado(e)}
                          />
             </div>
-
-            {/* Campo de Status */}
-          <div className="flex flex-col gap-2">
-            <label htmlFor="status" className="flex items-center">
-              <input
-                type="checkbox"
-                name="status"
-                checked={produto.status}
-                onChange={atualizarStatus}
-                className="mr-2"
-              />
-              Ativar oportunidade
-            </label>
-          </div>
-
             <button
                 className="bg-linear-to-r from-cyan-400 to-blue-500 text-white px-8 py-3 
                 rounded-lg font-semibold shadow-lg 

@@ -32,12 +32,6 @@ function FormProduto(){
            [e.target.name]: e.target.value 
         })
     }
-    function atualizarStatus(e: ChangeEvent<HTMLInputElement>) {
-    setProduto({
-      ...produto,
-      status: e.target.checked, // Ativa/desativa a oportunidade baseado no checkbox
-    });
-  }
 
     function retornar(){
         navigate("/produtos")
@@ -113,7 +107,6 @@ function FormProduto(){
               Ativar oportunidade
             </label>
           </div>
-
             <button
                 className="bg-linear-to-r from-cyan-400 to-blue-500 text-white px-8 py-3 
                 rounded-lg font-semibold shadow-lg 
