@@ -1,4 +1,4 @@
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { SyncLoader } from "react-spinners";
 import type Clientes from "../../../models/Clientes";
@@ -6,7 +6,6 @@ import { buscar } from "../../../services/services";
 import CardCliente from "../cardclientes/CardCliente";
 
 function ListaClientes() {
-  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [clientes, setClientes] = useState<Clientes[]>([]);
 

@@ -1,4 +1,4 @@
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import CardProduto from "../cardproduto/CardProduto";
 import { useEffect, useState } from "react";
 import { SyncLoader } from "react-spinners";
@@ -6,8 +6,6 @@ import type Produto from "../../../models/Produto";
 import { buscar } from "../../../services/services";
 
 function ListaProdutos() {
-  const navigate = useNavigate();
-
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [produtos, setProdutos] = useState<Produto[]>([]);
 

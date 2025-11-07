@@ -1,4 +1,4 @@
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import CardUsuario from "../cardusuario/CardUsuario";
 import { useEffect, useState } from "react";
 import { SyncLoader } from "react-spinners";
@@ -6,8 +6,6 @@ import type Usuario from "../../../models/Usuario";
 import { buscar } from "../../../services/services";
 
 function ListaUsuarios() {
-  const navigate = useNavigate();
-
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [usuarios, setUsuarios] = useState<Usuario[]>([]);
 
