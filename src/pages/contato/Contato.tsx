@@ -30,7 +30,7 @@ function Contato() {
   };
 
   return (
-    <section className="bg-linear-to-b from-blue-900 to-blue-300 text-white py-16 px-6 min-h-screen">
+    <section className="bg-gradient-to-r from-[#0B2D5C] via-[#1B5A9E] to-[#3BA3D8] text-white min-h-screen flex items-center py-16 px-6">
       <div className="max-w-3xl mx-auto text-center">
         {/* Header */}
         <div className="text-center mb-12">
@@ -43,17 +43,18 @@ function Contato() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Info Section */}
           <div className="md:col-span-1 space-y-6">
-            <div className="bg-linear-to-b from-blue-800 to-blue-600 rounded-lg p-6">
+            <div className="bg-linear-to-b bg-[#0077B6]  to-blue-600 rounded-lg p-6">
+              py-2 px-6
               <h3 className="font-bold text-lg mb-2">Email</h3>
               <p className="text-blue-200">contato@oxentecode.com</p>
             </div>
 
-            <div className="bg-blue-800 rounded-lg p-6">
+            <div className="bg-linear-to-b bg-[#0077B6]  to-blue-600 rounded-lg p-6">
               <h3 className="font-bold text-lg mb-2">Telefone</h3>
               <p className="text-blue-200">(70) 7070-7070</p>
             </div>
 
-            <div className="bg-blue-800 rounded-lg p-6">
+            <div className="bg-linear-to-b bg-[#0077B6]  to-blue-600 rounded-lg p-6">
               <h3 className="font-bold text-lg mb-2">Localização</h3>
               <p className="text-blue-200">Brasil</p>
             </div>
@@ -62,7 +63,7 @@ function Contato() {
           {/* Form Section */}
           <form
             onSubmit={handleSubmit}
-            className="md:col-span-2 bg-blue-800 rounded-lg p-8 space-y-4"
+            className="md:col-span-2 bg-linear-to-b bg-[#0077B6]  to-blue-800  rounded-lg p-8 space-y-4"
           >
             {/* Mensagem Sucesso */}
             {enviado && (
@@ -80,7 +81,7 @@ function Contato() {
                 value={formData.nome}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-2 rounded-lg bg-blue-700 text-white placeholder-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 rounded-lg bg-blue-600 text-white placeholder-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Seu nome"
               />
             </div>
@@ -94,7 +95,7 @@ function Contato() {
                 value={formData.email}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-2 rounded-lg bg-blue-700 text-white placeholder-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 rounded-lg bg-blue-600 text-white placeholder-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="seu@email.com"
               />
             </div>
@@ -110,7 +111,7 @@ function Contato() {
                 value={formData.assunto}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-2 rounded-lg bg-blue-700 text-white placeholder-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 rounded-lg bg-blue-600 text-white placeholder-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Assunto da mensagem"
               />
             </div>
@@ -126,7 +127,7 @@ function Contato() {
                 onChange={handleChange}
                 required
                 rows={5}
-                className="w-full px-4 py-2 rounded-lg bg-blue-700 text-white placeholder-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+                className="w-full px-4 py-2 rounded-lg bg-blue-600 text-white placeholder-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
                 placeholder="Sua mensagem aqui..."
               />
             </div>
@@ -151,7 +152,7 @@ function Contato() {
         </div>
       </div>
     </section>
-  )
+  );
 }
 
 export default Contato;

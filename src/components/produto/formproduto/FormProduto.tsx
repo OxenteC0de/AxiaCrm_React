@@ -8,21 +8,21 @@ import { atualizar, buscar, cadastrar } from "../../../services/services";
 function FormProduto() {
   const navigate = useNavigate();
 
-const [produto, setProduto] = useState<Produto>({
-  id: 0,
-  titulo: "",
-  descricao: "",
-  data: "",
-  status: false,
-  clienteId: 0, 
-});
+  const [produto, setProduto] = useState<Produto>({
+    id: 0,
+    titulo: "",
+    descricao: "",
+    valor: 0,
+    status: false,
+    cliente: { id: 0 },
+  });
 
   const [clientes, setClientes] = useState<Clientes[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoadingData, setIsLoadingData] = useState<boolean>(true);
 
   const { id } = useParams<{ id: string }>();
 
-  // Buscar clientes
   useEffect(() => {
     buscarClientes();
   }, []);
@@ -35,29 +35,64 @@ const [produto, setProduto] = useState<Produto>({
     }
   }
 
-  // Buscar oportunidade por ID
   async function buscarPorId(id: string) {
     try {
-      await buscar(`/oportunidades/${id}`, setProduto, {});
+      setIsLoadingData(true);
+      await buscar(
+        `/oportunidades/${id}`,
+        (dados) => {
+          console.log("Dados buscados:", dados);
+          setProduto({
+            id: dados.id,
+            titulo: dados.titulo || "",
+            descricao: dados.descricao || "",
+            valor:
+              typeof dados.valor === "string"
+                ? parseFloat(dados.valor)
+                : dados.valor || 0,
+            status: dados.status || false,
+            cliente: dados.cliente || { id: 0 },
+          });
+        },
+        {}
+      );
     } catch (error: any) {
       console.error("Erro ao buscar oportunidade:", error);
       alert("Erro ao buscar oportunidade: " + error.message);
+    } finally {
+      setIsLoadingData(false);
     }
   }
 
   useEffect(() => {
     if (id !== undefined) {
       buscarPorId(id);
+    } else {
+      setIsLoadingData(false);
     }
   }, [id]);
 
   function atualizarEstado(
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) {
-    setProduto({
-      ...produto,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+
+    if (name === "clienteId") {
+      setProduto({
+        ...produto,
+        cliente: { id: parseInt(value) || 0 },
+      });
+    } else if (name === "valor") {
+      setProduto({
+        ...produto,
+        valor: parseFloat(value) || 0,
+      });
+    } else {
+      setProduto({
+        ...produto,
+        [name]: value,
+      });
+    }
   }
 
   function atualizarStatus(e: ChangeEvent<HTMLInputElement>) {
@@ -68,35 +103,74 @@ const [produto, setProduto] = useState<Produto>({
   }
 
   function retornar() {
-    navigate("/produtos");
+    navigate("/oportunidades");
   }
 
   async function gerarNovaOportunidade(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setIsLoading(true);
 
-    // Validar cliente selecionado
-    if (!produto.clienteId) {
+    if (!produto.cliente?.id) {
       alert("Selecione um cliente!");
+      setIsLoading(false);
+      return;
+    }
+
+    if (produto.valor <= 0) {
+      alert("Informe um valor válido!");
       setIsLoading(false);
       return;
     }
 
     try {
       if (id !== undefined) {
-        await atualizar(`/oportunidades/${id}`, produto, setProduto, {});
+        // ATUALIZAR
+        const dadosAtualizacao: any = {
+          titulo: produto.titulo,
+          valor: produto.valor,
+          status: produto.status,
+        };
+        if (produto.descricao) {
+          dadosAtualizacao.descricao = produto.descricao;
+        }
+
+        console.log("Atualizando:", dadosAtualizacao);
+        await atualizar(
+          `/oportunidades/${id}`,
+          dadosAtualizacao,
+          setProduto,
+          {}
+        );
         alert("Oportunidade atualizada com sucesso!");
       } else {
-        await cadastrar(`/oportunidades`, produto, setProduto);
+        // CRIAR
+        const dados = {
+          titulo: produto.titulo,
+          descricao: produto.descricao,
+          valor: produto.valor,
+          status: produto.status,
+          cliente: produto.cliente,
+        };
+
+        console.log("Criando:", dados);
+        await cadastrar(`/oportunidades`, dados, setProduto);
         alert("Oportunidade cadastrada com sucesso!");
       }
-      retornar();
+      retornar(); 
     } catch (error: any) {
       console.error("Erro:", error);
-      alert("Erro ao salvar oportunidade: " + error.message);
+      alert("Erro: " + (error.response?.data?.message || error.message));
     } finally {
       setIsLoading(false);
     }
+  }
+
+  if (isLoadingData) {
+    return (
+      <div className="bg-gradient-to-r from-[#0B2C59] via-[#0077B6] to-[#00B4D8] flex justify-center w-full min-h-screen items-center">
+        <ClipLoader color="white" size={50} />
+      </div>
+    );
   }
 
   return (
@@ -107,40 +181,56 @@ const [produto, setProduto] = useState<Produto>({
         </h1>
 
         <form className="flex flex-col gap-4" onSubmit={gerarNovaOportunidade}>
-          {/* Cliente */}
-          <div className="flex flex-col gap-2">
-            <label htmlFor="clienteId" className="font-semibold text-gray-700">
-              Cliente *
-            </label>
-            <select
-              name="clienteId"
-              id="clienteId"
-              className="border-2 border-slate-700 rounded p-2"
-              value={produto.clienteId}
-              onChange={atualizarEstado}
-              required
-            >
-              <option value="">Selecione um cliente</option>
-              {clientes.map((cliente) => (
-                <option key={cliente.id} value={cliente.id}>
-                  {cliente.nome}
-                </option>
-              ))}
-            </select>
-          </div>
+          {/* Cliente - Só em cadastro */}
+          {id === undefined && (
+            <div className="flex flex-col gap-2">
+              <label
+                htmlFor="clienteId"
+                className="font-semibold text-gray-700"
+              >
+                Cliente *
+              </label>
+              <select
+                name="clienteId"
+                id="clienteId"
+                className="border-2 border-slate-700 rounded p-2"
+                value={produto.cliente?.id || ""}
+                onChange={atualizarEstado}
+                required
+              >
+                <option value="">Selecione um cliente</option>
+                {clientes.map((cliente) => (
+                  <option key={cliente.id} value={cliente.id}>
+                    {cliente.nome}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
+
+          {/* Cliente - Leitura em edição */}
+          {id !== undefined && (
+            <div className="flex flex-col gap-2">
+              <label className="font-semibold text-gray-700">Cliente</label>
+              <div className="border-2 border-slate-300 rounded p-2 bg-gray-100 text-gray-700">
+                {clientes.find((c) => c.id === produto.cliente?.id)?.nome ||
+                  "Carregando..."}
+              </div>
+            </div>
+          )}
 
           {/* Título */}
           <div className="flex flex-col gap-2">
             <label htmlFor="titulo" className="font-semibold text-gray-700">
-              Nome da oportunidade
+              Título da Oportunidade *
             </label>
             <input
               type="text"
-              placeholder="Digite o nome da oportunidade"
+              placeholder="Ex: Website Corporativo"
               name="titulo"
               id="titulo"
               className="border-2 border-slate-700 rounded p-2"
-              value={produto.titulo}
+              value={produto.titulo || ""}
               onChange={atualizarEstado}
               required
             />
@@ -153,27 +243,28 @@ const [produto, setProduto] = useState<Produto>({
             </label>
             <input
               type="text"
-              placeholder="Descreva aqui a oportunidade"
+              placeholder="Descreva a oportunidade"
               name="descricao"
               id="descricao"
               className="border-2 border-slate-700 rounded p-2"
-              value={produto.descricao}
+              value={produto.descricao || ""}
               onChange={atualizarEstado}
-              required
             />
           </div>
 
-          {/* Data */}
+          {/* Valor */}
           <div className="flex flex-col gap-2">
-            <label htmlFor="data" className="font-semibold text-gray-700">
-              Data
+            <label htmlFor="valor" className="font-semibold text-gray-700">
+              Valor (R$) *
             </label>
             <input
-              type="date"
-              name="data"
-              id="data"
+              type="number"
+              step="0.01"
+              placeholder="Ex: 8000.00"
+              name="valor"
+              id="valor"
               className="border-2 border-slate-700 rounded p-2"
-              value={produto.data}
+              value={produto.valor || 0}
               onChange={atualizarEstado}
               required
             />
@@ -189,12 +280,12 @@ const [produto, setProduto] = useState<Produto>({
                 type="checkbox"
                 name="status"
                 id="status"
-                checked={produto.status}
+                checked={produto.status || false}
                 onChange={atualizarStatus}
                 className="mr-2 w-4 h-4"
               />
               <span className="font-semibold text-gray-700">
-                Ativar oportunidade
+                Oportunidade Ativa
               </span>
             </label>
           </div>

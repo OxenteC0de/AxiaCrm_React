@@ -54,10 +54,7 @@ function App() {
                 path="/editaroportunidades/:id"
                 element={<FormProduto />}
               />
-              <Route
-                path="/deletaoportunidades/:id"
-                element={<DeletarProduto />}
-              />
+              <Route path="/deletaroportunidades/:id" element={<DeletarProduto />} />
 
               {/* Usuários */}
               <Route path="/usuarios" element={<ListaUsuarios />} />

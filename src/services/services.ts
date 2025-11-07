@@ -2,26 +2,24 @@ import axios from "axios";
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
-  headers: {
-    "Content-Type": "application/json",
-  },
 });
 
-// Adicionar token aos headers se existir
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem("@axiacrm:token");
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-});
-
-export const login = async (url: string, dados: Object, setDados: Function) => {
-  const resposta = await api.post(url, dados);
-  setDados(resposta.data);
+// Buscar dados
+export const buscar = async (url: string, setDado: any, config: any) => {
+  const response = await api.get(url, config);
+  setDado(response.data);
+  return response.data;
 };
 
-export const cadastrar = async (
+// Cadastrar (POST)
+export const cadastrar = async (url: string, dados: any, setDado: any) => {
+  const response = await api.post(url, dados);
+  setDado(response.data);
+  return response.data;
+};
+
+//Logar (POST)
+export const login = async (
   url: string,
   dados: Object,
   setDados: Function
@@ -30,25 +28,32 @@ export const cadastrar = async (
   setDados(resposta.data);
 };
 
-export const buscar = async (
-  url: string,
-  setDados: Function,
-  header: Object
-) => {
-  const resposta = await api.get(url, header);
-  setDados(resposta.data);
-};
-
+// Atualizar completo (PUT)
 export const atualizar = async (
   url: string,
-  dados: Object,
-  setDados: Function,
-  header: Object
+  dados: any,
+  setDado: any,
+  config: any
 ) => {
-  const resposta = await api.put(url, dados, header);
-  setDados(resposta.data);
+  const response = await api.put(url, dados, config);
+  setDado(response.data);
+  return response.data;
 };
 
-export const deletar = async (url: string, header: Object) => {
-  await api.delete(url, header);
+// Atualizar parcial (PATCH) , pois no back por algum motivo do passado a gente usou patch para atualizar!
+export const atualizarPatch = async (
+  url: string,
+  dados: any,
+  setDado: any,
+  config: any
+) => {
+  const response = await api.patch(url, dados, config);
+  setDado(response.data);
+  return response.data;
+};
+
+// Deletar
+export const deletar = async (url: string, config: any) => {
+  const response = await api.delete(url, config);
+  return response.data;
 };
