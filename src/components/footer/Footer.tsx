@@ -1,6 +1,6 @@
 import {
   FacebookLogo,
-  InstagramLogo,
+  GithubLogo,
   LinkedinLogo,
 } from "@phosphor-icons/react";
 
@@ -97,13 +97,13 @@ function Footer() {
               <LinkedinLogo size={40} weight="bold" />
             </a>
             <a
-              href="https://www.instagram.com/"
+              href="https://github.com/OxenteC0de"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-cyan-300 transition-all duration-300 hover:scale-110"
-              aria-label="Instagram"
+              aria-label="GitHub"
             >
-              <InstagramLogo size={40} weight="bold" />
+              <GithubLogo size={40} weight="bold" />
             </a>
             <a
               href="https://www.facebook.com/"

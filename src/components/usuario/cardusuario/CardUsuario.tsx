@@ -6,6 +6,14 @@ interface CardUsuarioProps {
 }
 
 function CardUsuario({ usuario }: CardUsuarioProps) {
+  const cargoColors: Record<string, string> = {
+    admin: "bg-red-100 text-red-800",
+    moderador: "bg-orange-100 text-orange-800",
+    usuario: "bg-blue-100 text-blue-800",
+  };
+
+  const cargoColor = cargoColors[usuario.cargo || "usuario"];
+
   return (
     <div className="flex flex-col rounded-2xl overflow-hidden justify-between shadow-lg border border-gray-200">
       <header className="py-2 px-6 bg-[#0077B6] text-white font-bold text-2xl">
@@ -13,16 +21,19 @@ function CardUsuario({ usuario }: CardUsuarioProps) {
       </header>
 
       <div className="p-8 bg-white min-h-[120px] flex flex-col gap-2">
-        <p className="text-xl text-gray-700">
-          <strong>Usuário:</strong> {usuario.usuario}
-        </p>
+        <p className="text-sm text-gray-500">📧 {usuario.email}</p>
         {usuario.foto && (
           <img
             src={usuario.foto}
             alt={usuario.nome}
-            className="w-20 h-20 rounded-full object-cover"
+            className="w-16 h-16 rounded-full object-cover"
           />
         )}
+        <span
+          className={`inline-block text-xs px-2 py-1 rounded w-fit ${cargoColor}`}
+        >
+          {usuario.cargo || "usuario"}
+        </span>
       </div>
 
       <div className="flex">

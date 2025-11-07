@@ -1,9 +1,8 @@
 export default interface Produto {
   id: number;
   titulo: string;
-  descricao: string;
-  data: string;
+  descricao?: string;
+  valor: number;
   status: boolean;
-  clienteId?: number;
-  cliente?: any;
+  cliente?: { id: number };
 }
