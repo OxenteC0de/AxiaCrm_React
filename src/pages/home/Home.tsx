@@ -1,46 +1,71 @@
- //0B2C59, 00776 e 00B4D8, mesmo molde do de RH
+import { useNavigate } from "react-router-dom";
+import graficoImg from "../../assets/grafico2.png";
 
 function Home() {
-  return (
-    <div
-      className="min-h-screen flex items-center justify-center text-gray-900"
-      style={{
-        background: "linear-gradient(135deg, #0B2C59 0%, #0077B6 50%, #00B4D8 100%)"
-      }}
-    >
-      <div className="container grid grid-cols-1 md:grid-cols-2 gap-12 px-8 md:px-20 items-center text-white">
+  const navigate = useNavigate();
 
-      
-        <div className="flex flex-col gap-6">
-          <h1 className="text-4xl md:text-5xl font-extrabold leading-tight">
+  return (
+    <section className="bg-gradient-to-r from-[#0B2D5C] via-[#1B5A9E] to-[#3BA3D8] text-white min-h-screen flex items-center py-16 px-6">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+        {/* Texto e Conteúdo à Esquerda */}
+        <div className="space-y-8">
+          <h1 className="text-6xl font-bold leading-tight">
             Simplifique e fortaleça o relacionamento com seus clientes
           </h1>
-          <p className="text-lg text-gray-200 max-w-md">
-            O <span className="font-semibold text-cyan-300">AxiaCRM</span> é a solução completa para gestão de relacionamento com clientes. 
-            Organize contatos, acompanhe oportunidades e automatize processos para impulsionar suas vendas.
+
+          <p className="text-lg text-blue-50 leading-relaxed">
+            O <span className="font-semibold">AxiaCRM</span> é a solução
+            completa para gestão de relacionamento com clientes. Organize
+            contatos, acompanhe oportunidades e automatize processos para
+            impulsionar suas vendas.
           </p>
 
-          <div className="flex gap-4">
-            <button className="bg-linear-to-r from-cyan-400 to-blue-500 text-white px-8 py-3 rounded-lg font-semibold shadow-lg hover:scale-105 hover:shadow-cyan-500/30 transition-transform duration-300">
+          <ul className="space-y-3 text-base">
+            <li className="flex items-start">
+              <span className="text-green-400 mr-3 mt-1">✓</span>
+              <span>Gestão de Leads e Oportunidades</span>
+            </li>
+            <li className="flex items-start">
+              <span className="text-green-400 mr-3 mt-1">✓</span>
+              <span>Funil de Vendas Personalizado</span>
+            </li>
+            <li className="flex items-start">
+              <span className="text-green-400 mr-3 mt-1">✓</span>
+              <span>Automação de Tarefas e Follow-ups</span>
+            </li>
+            <li className="flex items-start">
+              <span className="text-green-400 mr-3 mt-1">✓</span>
+              <span>Relatórios e Insights em Tempo Real</span>
+            </li>
+          </ul>
+
+          <div className="flex gap-4 pt-4">
+            <button
+              onClick={() => navigate("/oportunidades")}
+              className="bg-[#00D4FF] hover:bg-[#00B8E0] text-gray-900 px-8 py-3.5 rounded-lg font-bold transition-all duration-300 shadow-lg hover:shadow-xl"
+            >
               Começar agora
             </button>
-            <button className="border border-cyan-300 text-cyan-200 px-8 py-3 rounded-lg font-semibold hover:bg-white/10 transition">
-              Ver demonstração
+
+            <button
+              onClick={() => navigate("/solicitar-demonstracao")}
+              className="border-2 border-white hover:bg-white/10 text-white px-8 py-3.5 rounded-lg font-bold transition-all duration-300"
+            >
+              Solicitar demonstração
             </button>
           </div>
         </div>
 
-  
-        <div className="flex justify-center">
+        {/* Imagem do Gráfico à Direita */}
+        <div className="flex justify-center items-center">
           <img
-            src="./src/assets/grafico2.png"
-            alt="Ilustração AxiaCRM"
-            className="w-4/5 md:w-3/4 drop-shadow-2xl hover:scale-105 transition-transform duration-500"
+            src={graficoImg}
+            alt="Gráfico de crescimento"
+            className="w-full max-w-lg drop-shadow-2xl"
           />
         </div>
-
       </div>
-    </div>
+    </section>
   );
 }
 

@@ -2,7 +2,24 @@ import axios from "axios";
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
+
+// Adicionar token aos headers se existir
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem("@axiacrm:token");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
+export const login = async (url: string, dados: Object, setDados: Function) => {
+  const resposta = await api.post(url, dados);
+  setDados(resposta.data);
+};
 
 export const cadastrar = async (
   url: string,

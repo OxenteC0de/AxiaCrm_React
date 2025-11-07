@@ -1,30 +1,33 @@
-import type Produto from "../../../models/Produto";
 import { Link } from "react-router-dom";
+import type Usuario from "../../../models/Usuario";
 
-interface CardProdutoProps {
-  produto: Produto;
+interface CardUsuarioProps {
+  usuario: Usuario;
 }
 
-function CardProduto({ produto }: CardProdutoProps) {
+function CardUsuario({ usuario }: CardUsuarioProps) {
   return (
     <div className="flex flex-col rounded-2xl overflow-hidden justify-between shadow-lg border border-gray-200">
       <header className="py-2 px-6 bg-[#0077B6] text-white font-bold text-2xl">
-        {produto.titulo}
+        {usuario.nome}
       </header>
 
       <div className="p-8 bg-white min-h-[120px] flex flex-col gap-2">
-        <p className="text-xl text-gray-700">{produto.descricao}</p>
-        <p className="text-sm text-gray-500">Data: {produto.data}</p>
-        {produto.status && (
-          <span className="inline-block bg-green-100 text-green-800 text-xs px-2 py-1 rounded w-fit">
-            Ativa
-          </span>
+        <p className="text-xl text-gray-700">
+          <strong>Usuário:</strong> {usuario.usuario}
+        </p>
+        {usuario.foto && (
+          <img
+            src={usuario.foto}
+            alt={usuario.nome}
+            className="w-20 h-20 rounded-full object-cover"
+          />
         )}
       </div>
 
       <div className="flex">
         <Link
-          to={`/editarproduto/${produto.id}`}
+          to={`/editarusuario/${usuario.id}`}
           className="w-full text-slate-100 bg-[#0077B6] hover:bg-[#0B2C59]
             flex items-center justify-center py-3 transition-colors"
         >
@@ -32,7 +35,7 @@ function CardProduto({ produto }: CardProdutoProps) {
         </Link>
 
         <Link
-          to={`/deletarproduto/${produto.id}`}
+          to={`/deletarusuario/${usuario.id}`}
           className="text-slate-100 bg-[#0B2C59] hover:bg-red-600 w-full
             flex items-center justify-center transition-colors"
         >
@@ -43,4 +46,4 @@ function CardProduto({ produto }: CardProdutoProps) {
   );
 }
 
-export default CardProduto;
+export default CardUsuario;

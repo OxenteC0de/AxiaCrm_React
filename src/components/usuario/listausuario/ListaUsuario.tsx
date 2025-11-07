@@ -1,26 +1,27 @@
 import { useNavigate, Link } from "react-router-dom";
+import CardUsuario from "../cardusuario/CardUsuario";
 import { useEffect, useState } from "react";
 import { SyncLoader } from "react-spinners";
-import type Clientes from "../../../models/Clientes";
+import type Usuario from "../../../models/Usuario";
 import { buscar } from "../../../services/services";
-import CardCliente from "../cardclientes/CardCliente";
 
-function ListaClientes() {
+function ListaUsuarios() {
   const navigate = useNavigate();
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [clientes, setClientes] = useState<Clientes[]>([]);
+  const [usuarios, setUsuarios] = useState<Usuario[]>([]);
 
   useEffect(() => {
-    buscarClientes();
+    buscarUsuarios();
   }, []);
 
-  async function buscarClientes() {
+  async function buscarUsuarios() {
     try {
       setIsLoading(true);
-      await buscar("/clientes", setClientes, {});
+      await buscar("/usuarios", setUsuarios, {});
     } catch (error: any) {
-      console.error("Erro ao buscar clientes:", error);
-      alert("Erro ao buscar clientes: " + error.message);
+      console.error("Erro ao buscar usuários:", error);
+      alert("Erro ao buscar usuários: " + error.message);
     } finally {
       setIsLoading(false);
     }
@@ -38,24 +39,24 @@ function ListaClientes() {
         {!isLoading && (
           <>
             <div className="flex justify-between items-center mb-8">
-              <h1 className="text-4xl font-bold text-white">Clientes</h1>
-              <Link to="/cadastrarcliente">
+              <h1 className="text-4xl font-bold text-white">Usuários</h1>
+              <Link to="/cadastrarusuario">
                 <button className="bg-gradient-to-r from-cyan-400 to-blue-500 text-white px-8 py-3 rounded-lg font-semibold shadow-lg hover:scale-105 hover:shadow-cyan-500/30 transition-transform duration-300">
-                  + Novo cliente
+                  + Novo usuário
                 </button>
               </Link>
             </div>
 
-            {clientes.length === 0 ? (
+            {usuarios.length === 0 ? (
               <div className="text-center">
                 <span className="text-3xl text-white">
-                  Nenhum cliente foi encontrado!
+                  Nenhum usuário foi encontrado!
                 </span>
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {clientes.map((cliente) => (
-                  <CardCliente key={cliente.id} cliente={cliente} />
+                {usuarios.map((usuario) => (
+                  <CardUsuario key={usuario.id} usuario={usuario} />
                 ))}
               </div>
             )}
@@ -66,4 +67,4 @@ function ListaClientes() {
   );
 }
 
-export default ListaClientes;
+export default ListaUsuarios;
